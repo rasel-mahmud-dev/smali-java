@@ -34,16 +34,11 @@ class Player {
 public class MyClass {
 
     public static void main(String[] args) {
-
-        for (int i = 0; i < 1000; i++) {
-            Player player = new Player();
-            player.play();
-
-            System.out.println("Player " + i + " isPlaying: " + player.isPlaying);
-            int finalI = i;
-            player.setOnEmitListener(playbackTime -> {
-                System.out.println("Current playback time for Player " + finalI + ": " + playbackTime / 1000 + " seconds");
-            });
-        }
+        Player player = new Player();
+        player.play();
+        System.out.println("Player  isPlaying: " + player.isPlaying);
+        player.setOnEmitListener(playbackTime -> {
+            System.out.println("Current playback time for Player " + playbackTime / 1000 + " seconds");
+        });
     }
 }

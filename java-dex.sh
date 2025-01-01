@@ -1,10 +1,18 @@
+rm -rf java-out/*
+
+javac -d java-out com/example/MyApp.java
+
+java -cp java-out com.example.MyApp
+
 jar cvf output/myapp.jar -C java-out .
 /home/rasel/Android/Sdk/build-tools/34.0.0/d8 --output ./output output/myapp.jar
 
-# 1. Push the DEX file to the device/emulator
 echo "Pushing DEX file to device/emulator..."
 adb push output/classes.dex /data/local/tmp/
 
-# 2. Run the DEX file on the device/emulator
+adb shell ls /data/local/tmp/
+
+
 echo "Running DEX file on device/emulator..."
-adb shell "dalvikvm -cp /data/local/tmp/output.dex com.example.MyClass"
+adb shell "dalvikvm -cp /data/local/tmp/classes.dex com.example.MyClass"
+

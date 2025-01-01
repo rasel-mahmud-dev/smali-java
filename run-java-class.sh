@@ -1,4 +1,2 @@
-
-javac -d . com/example/MyClass.java
-
-java com.example.MyClass
+javac -d java-out com/example/MyApp.java 
+java -cp java-out com.example.MyApp

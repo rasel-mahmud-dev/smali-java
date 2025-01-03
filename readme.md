@@ -23,7 +23,7 @@ echo "Running DEX file on device/emulator..."
 adb shell "dalvikvm -cp /data/local/tmp/output.dex com.example.MyClass"
 
 ```
- 
+
 ```shell
 javac -d java-out com/example/MyApp.java 
 java -cp java-out com.example.MyApp
@@ -32,15 +32,15 @@ java -cp java-out com.example.MyApp
 
 ```
 
-
 ### convert java class to jar and jar to dex
+
 ```shell
 jar cvf output/myapp.jar -C java-out .
 /home/rasel/Android/Sdk/build-tools/34.0.0/d8 --output ./output output/myapp.jar
 ```
 
+### Run dex to android
 
-### Run dex to android 
 ```shell
 
 /home/rasel/Android/Sdk/build-tools/34.0.0/d8 --output ./output output/myapp.jar
@@ -59,9 +59,36 @@ adb shell "dalvikvm -cp /data/local/tmp/classes.dex com.example.MyClass"
 ```
 
 ### run jar
+
 ```shell
 javac -d java-out com/example/MyApp.java 
 jar cvf output/myapp.jar -C java-out .
 jar cmf MANIFEST.MF -C java-out .
 java -jar ./output/myapp.jar
+```
+
+
+### Java to jar to dex
+```shell
+javac -d java-out com/example/MyApp.java
+java -cp java-out com.example.MyApp
+jar cvf output/myapp.jar -C java-out .
+/home/rasel/Android/Sdk/build-tools/34.0.0/d8 --output ./output output/myapp.jar
+```
+
+# Run smali
+### convert to dex to smali
+
+```shell
+java -jar baksmali.jar disassemble output/classes.dex
+```
+
+### smali to dex and run
+
+```shell
+    rm -rf ./output/classes2.dex
+    java -jar smali.jar assemble out/ -o output/classes2.dex
+    adb push output/classes2.dex /data/local/tmp/
+#    adb shell ls /data/local/tmp/
+    adb shell "dalvikvm -cp /data/local/tmp/classes2.dex com.example.MyApp"
 ```
